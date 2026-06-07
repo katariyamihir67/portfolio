@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MIHIR KATARIYA — Flutter Developer portfolio. Crafting clean UI, smooth user experiences, and reliable mobile applications.">
+    <meta name="keywords" content="MIHIR KATARIYA, Flutter Developer, Dart, Mobile App Developer, Portfolio">
+    <meta name="author" content="MIHIR KATARIYA">
+    <title>MIHIR KATARIYA | Flutter Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ===================== CURSOR GLOW ===================== -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- ===================== NAVIGATION ===================== -->
+    <nav class="navbar" id="navbar">
+        <a href="#hero" class="nav-logo">
+            <span class="logo-bracket">&lt;</span>MK<span class="logo-bracket">/&gt;</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section class="hero" id="hero">
+        <canvas class="hero-particles" id="heroParticles"></canvas>
+        <!-- Floating Flutter Logo -->
+        <div class="hero-flutter-logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="280" height="280"><path fill="rgba(0,212,255,0.04)" d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z"/></svg>
+        </div>
+        <!-- Floating code snippet decoration -->
+        <div class="hero-code-block" aria-hidden="true">
+            <span class="code-line"><span class="code-keyword">class</span> <span class="code-class">MihirKatariya</span> <span class="code-keyword">extends</span> <span class="code-class">FlutterDev</span> {</span>
+            <span class="code-line">&nbsp;&nbsp;<span class="code-keyword">final</span> passion = <span class="code-string">'Building Apps'</span>;</span>
+            <span class="code-line">&nbsp;&nbsp;<span class="code-keyword">final</span> focus = <span class="code-string">'Clean UI'</span>;</span>
+            <span class="code-line">}</span>
+        </div>
+        <!-- Floating tech badges -->
+        <div class="hero-badges" aria-hidden="true">
+            <span class="hero-badge badge-1">Flutter</span>
+            <span class="hero-badge badge-2">Dart</span>
+            <span class="hero-badge badge-3">Mobile</span>
+        </div>
+        <div class="hero-content">
+            <div class="hero-flutter-icon reveal-text">
+                <svg viewBox="0 0 24 24" width="48" height="48"><path fill="#54C5F8" d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z"/></svg>
+            </div>
+            <p class="hero-greeting reveal-text">Hello, I'm</p>
+            <h1 class="hero-name reveal-text">
+                <span class="gradient-text">MIHIR KATARIYA</span>
+            </h1>
+            <p class="hero-title reveal-text">
+                <span class="typewriter" id="typewriter"></span><span class="typewriter-cursor">|</span>
+            </p>
+            <p class="hero-description reveal-text">
+                Crafting pixel-perfect Flutter apps with clean architecture, smooth animations, and delightful user experiences.
+            </p>
+            <div class="hero-cta reveal-text">
+                <a href="#projects" class="btn btn-primary">
+                    <span>View My Work</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                </a>
+                <a href="#contact" class="btn btn-outline">
+                    <span>Get In Touch</span>
+                </a>
+            </div>
+            <div class="hero-social reveal-text">
+                <a href="https://github.com/katariyamihir67" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="mailto:katariyamihir67@gmail.com" class="social-link" aria-label="Email">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- ===================== ABOUT SECTION ===================== -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">01 — About</span>
+                <h2 class="section-title">Who I <span class="gradient-text">Am</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-image-wrapper animate-on-scroll">
+                    <div class="about-image-border"></div>
+                    <img src="assets/images/profile_avatar.png" alt="MIHIR KATARIYA - Flutter Developer" class="about-image">
+                </div>
+                <div class="about-text animate-on-scroll">
+                    <p>
+                        I'm <strong>MIHIR KATARIYA</strong>, a passionate Flutter developer based in Surat, India. I specialize in building 
+                        beautiful, high-performance mobile applications using Flutter and Dart.
+                    </p>
+                    <p>
+                        With hands-on experience at SHV Infotech, I've honed my skills in crafting clean user interfaces 
+                        and delivering smooth, reliable mobile experiences. I believe great apps are born from the intersection 
+                        of thoughtful design and solid engineering.
+                    </p>
+                    <p>
+                        When I'm not coding, I'm exploring new Flutter packages, experimenting with animations, 
+                        and staying up-to-date with the latest in mobile development.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="2">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="6">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Months Exp.</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="100">0</span><span class="stat-plus">%</span>
+                            <span class="stat-label">Dedication</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SKILLS SECTION ===================== -->
+    <section class="section skills" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">02 — Skills</span>
+                <h2 class="section-title">My <span class="gradient-text">Toolkit</span></h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card animate-on-scroll" data-delay="0">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="40" height="40"><path fill="#54C5F8" d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z"/></svg>
+                    </div>
+                    <h3 class="skill-name">Flutter</h3>
+                    <p class="skill-desc">Cross-platform mobile app development with beautiful UIs and smooth animations.</p>
+                    <div class="skill-bar"><div class="skill-fill" data-level="90"></div></div>
+                </div>
+                <div class="skill-card animate-on-scroll" data-delay="100">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="40" height="40"><path fill="#0175C2" d="M4.105 4.105S9.158 1.58 11.684.316a3.079 3.079 0 0 1 1.481-.315c.766.047 1.677.788 1.677.788L24 9.948v9.789h-4.263V24H.315c.266-1.106.615-2.21.949-3.158a53.2 53.2 0 0 1 1.106-2.842S5.842 8.421 4.105 4.105z"/><path fill="#13B9FD" d="M11.403 12.504l-4.263 4.263S6.264 19.79 6.053 21.947h13.684V9.474L11.403 12.504z"/></svg>
+                    </div>
+                    <h3 class="skill-name">Dart</h3>
+                    <p class="skill-desc">Strong foundation in Dart programming with OOP principles and async patterns.</p>
+                    <div class="skill-bar"><div class="skill-fill" data-level="88"></div></div>
+                </div>
+                <div class="skill-card animate-on-scroll" data-delay="200">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#f472b6" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                    </div>
+                    <h3 class="skill-name">Git &amp; GitHub</h3>
+                    <p class="skill-desc">Version control, collaborative workflows, and CI/CD pipeline management.</p>
+                    <div class="skill-bar"><div class="skill-fill" data-level="75"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PROJECTS SECTION ===================== -->
+    <section class="section projects" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">03 — Projects</span>
+                <h2 class="section-title">Featured <span class="gradient-text">Work</span></h2>
+            </div>
+            <div class="projects-grid">
+                <!-- Project 1: Urban Cafe -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image-wrapper">
+                        <img src="assets/images/urban_cafe_app.png" alt="Urban Cafe - Flutter cafe ordering application" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://github.com/katariyamihir67" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View Urban Cafe on GitHub">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">Provider</span>
+                            <span class="tag">Google Fonts</span>
+                        </div>
+                        <h3 class="project-title">Urban Cafe</h3>
+                        <p class="project-desc">A full-featured cafe ordering app with onboarding, authentication, restaurant search, cart management, checkout, payment integration, and order tracking — built with clean Provider architecture.</p>
+                    </div>
+                </div>
+                <!-- Project 2: FitBody App -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image-wrapper">
+                        <img src="assets/images/fitbody_app.png" alt="FitBody App - Flutter fitness tracking application" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://github.com/katariyamihir67" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View FitBody App on GitHub">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">Dart</span>
+                            <span class="tag">Fitness</span>
+                        </div>
+                        <h3 class="project-title">FitBody App</h3>
+                        <p class="project-desc">A comprehensive fitness tracking application with workout routines, progress tracking, exercise guides, and personalized health dashboards to keep users motivated.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== EXPERIENCE SECTION ===================== -->
+    <section class="section experience" id="experience">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">04 — Experience</span>
+                <h2 class="section-title">My <span class="gradient-text">Journey</span></h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2025 — Present</span>
+                        <h3 class="timeline-role">Flutter Developer</h3>
+                        <h4 class="timeline-company">SHV Infotech, Surat</h4>
+                        <p class="timeline-desc">
+                            Building and maintaining Flutter mobile applications. Collaborating with UI/UX designers 
+                            to translate designs into pixel-perfect, responsive interfaces. Working with REST APIs 
+                            and implementing efficient state management solutions.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">Dart</span>
+                            <span class="tag">Mobile Dev</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024</span>
+                        <h3 class="timeline-role">Self-Learning & Projects</h3>
+                        <h4 class="timeline-company">Independent</h4>
+                        <p class="timeline-desc">
+                            Deep-dived into Flutter and Dart through personal projects like Food App and FitBody App. 
+                            Built real-world applications to strengthen mobile development skills and explore 
+                            modern app architecture patterns.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="tag">Learning</span>
+                            <span class="tag">Side Projects</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACT SECTION ===================== -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">05 — Contact</span>
+                <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-text animate-on-scroll">
+                    <p class="contact-heading">Got a project in mind?</p>
+                    <p class="contact-sub">
+                        I'm always excited to work on new Flutter projects and collaborate with creative minds. 
+                        Whether you need a mobile app, want to discuss tech, or just say hello — feel free to reach out!
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:katariyamihir67@gmail.com" class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            </div>
+                            <div>
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">katariyamihir67@gmail.com</span>
+                            </div>
+                        </a>
+                        <a href="https://github.com/katariyamihir67" target="_blank" rel="noopener noreferrer" class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            </div>
+                            <div>
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-value">katariyamihir67</span>
+                            </div>
+                        </a>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div>
+                                <span class="contact-label">Location</span>
+                                <span class="contact-value">Surat, Gujarat, India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form animate-on-scroll" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="formName" placeholder=" " required>
+                        <label for="formName">Your Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="formEmail" placeholder=" " required>
+                        <label for="formEmail">Your Email</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="formMessage" rows="5" placeholder=" " required></textarea>
+                        <label for="formMessage">Your Message</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full" id="formSubmit">
+                        <span>Send Message</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                    <p class="form-note">Clicking send will open your email client to mail directly.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p class="footer-text">
+                Designed & Built by <span class="gradient-text">MIHIR KATARIYA</span>
+            </p>
+            <p class="footer-copyright">&copy; 2025 All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
