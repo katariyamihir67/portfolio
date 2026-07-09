@@ -7,10 +7,13 @@
     'use strict';
 
     // ——————————————————————————————————————————
-    // 1. CURSOR GLOW
+    // 1. CURSOR GLOW (Smooth Premium)
     // ——————————————————————————————————————————
     const cursorGlow = document.getElementById('cursorGlow');
-    let mouseX = 0, mouseY = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
 
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
@@ -19,12 +22,25 @@
 
     function updateCursor() {
         if (cursorGlow) {
-            cursorGlow.style.left = mouseX + 'px';
-            cursorGlow.style.top = mouseY + 'px';
+            cursorX += (mouseX - cursorX) * 0.15; // Smooth trailing effect
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursorGlow.style.left = cursorX + 'px';
+            cursorGlow.style.top = cursorY + 'px';
         }
         requestAnimationFrame(updateCursor);
     }
     requestAnimationFrame(updateCursor);
+
+    // Interactive cursor scaling
+    const interactives = document.querySelectorAll('a, button, .skill-card, .project-card, .education-card, .timeline-content, .contact-item');
+    interactives.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (cursorGlow) cursorGlow.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        });
+        el.addEventListener('mouseleave', () => {
+            if (cursorGlow) cursorGlow.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+    });
 
     // ——————————————————————————————————————————
     // 2. HERO PARTICLE CANVAS
