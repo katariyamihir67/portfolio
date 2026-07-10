@@ -186,9 +186,9 @@
                     <div class="project-image-wrapper">
                         <img src="assets/images/urban_cafe_app.png" alt="Urban Cafe - Flutter cafe ordering application" class="project-image">
                         <div class="project-overlay">
-                            <!-- Live App Link -->
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Open Application" title="Open Live App">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            <!-- Live App Link (Triggers Modal) -->
+                            <a href="javascript:void(0)" onclick="openModal('Urban Cafe')" class="project-link" aria-label="Open Application" title="Watch App Demo">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                             </a>
                             <!-- GitHub Code Link -->
                             <a href="https://github.com/katariyamihir67" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View Source Code" title="View Code on GitHub">
@@ -211,9 +211,9 @@
                     <div class="project-image-wrapper">
                         <img src="assets/images/fitbody_app.png" alt="FitBody App - Flutter fitness tracking application" class="project-image">
                         <div class="project-overlay">
-                            <!-- Live App Link -->
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Open Application" title="Open Live App">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            <!-- Live App Link (Triggers Modal) -->
+                            <a href="javascript:void(0)" onclick="openModal('FitBody App')" class="project-link" aria-label="Open Application" title="Watch App Demo">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                             </a>
                             <!-- GitHub Code Link -->
                             <a href="https://github.com/katariyamihir67" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View Source Code" title="View Code on GitHub">
@@ -400,6 +400,24 @@
             </div>
         </div>
     </section>
+
+    <!-- ===================== PROJECT DEMO MODAL ===================== -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+            <h3 class="modal-title" id="modalTitle">Project Name</h3>
+            <div class="modal-body">
+                <div class="mobile-frame">
+                    <!-- Placeholder for GIF/Video -->
+                    <div class="video-placeholder">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+                        <p>App Demo Video</p>
+                        <span style="font-size: 0.8rem; opacity: 0.7; text-align: center;">(Replace this placeholder in HTML with your actual app recording)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">

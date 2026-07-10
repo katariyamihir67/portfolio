@@ -342,3 +342,35 @@
     });
 
 })();
+
+
+    // ==========================================
+    // 5. PROJECT DEMO MODAL
+    // ==========================================
+    const modal = document.getElementById("projectModal");
+    const modalCloseBtn = document.getElementById("modalClose");
+    const modalTitle = document.getElementById("modalTitle");
+
+    window.openModal = function(projectName) {
+        if(modal && modalTitle) {
+            modalTitle.textContent = projectName;
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden"; // Prevent scrolling
+        }
+    };
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener("click", () => {
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+        });
+    }
+
+    if (modal) {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.remove("active");
+                document.body.style.overflow = "auto";
+            }
+        });
+    }
