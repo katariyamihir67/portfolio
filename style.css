@@ -824,10 +824,11 @@ body:hover .cursor-glow {
 .project-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(6, 6, 15, 0.7);
+    background: rgba(15, 15, 35, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
     opacity: 0;
     transition: var(--transition);
 }
