@@ -69,6 +69,36 @@ body {
 }
 
 /* ============================================
+   PRELOADER
+   ============================================ */
+.preloader {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100vh;
+    background: #030305;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.preloader-logo {
+    stroke-dasharray: 260;
+    stroke-dashoffset: 260;
+}
+.preloader-text {
+    font-family: var(--font-code);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    letter-spacing: 2px;
+}
+
+/* ============================================
    PREMIUM AURORA BACKGROUND
    ============================================ */
 body::before {
@@ -582,16 +612,50 @@ body:hover .cursor-glow {
     letter-spacing: -1px;
 }
 
-/* Scroll animation */
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+/* GSAP & LENIS UTILITIES */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
+/* Hide elements initially for GSAP to prevent FOUC */
+.gsap-reveal,
+.gsap-fade-up,
+.gsap-scale-up,
+.gsap-skill,
+.gsap-project,
+.gsap-edu,
+.gsap-timeline {
+    visibility: hidden;
+}
+
+/* Remove CSS transitions from elements GSAP will animate */
+.animate-on-scroll {
+    opacity: 1; /* GSAP will handle opacity */
+    transform: none;
+    transition: none;
+}
 .animate-on-scroll.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+}
+
+/* Enhanced Glassmorphism for cards */
+.skill-card, .project-card, .education-card, .timeline-content, .contact-item {
+    background: rgba(10, 10, 18, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ============================================
@@ -1501,4 +1565,197 @@ body:hover .cursor-glow {
     gap: 10px;
     padding: 20px;
     color: var(--text-secondary);
+}
+
+/* ===================== APP MOCKUPS (CSS DEMOS) ===================== */
+.mockup-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #121212;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+}
+
+/* Urban Cafe Mockup */
+.cafe-app {
+    padding: 30px 20px 20px;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.cafe-app::-webkit-scrollbar { display: none; }
+
+.cafe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.cafe-title { font-size: 1.2rem; font-weight: 700; }
+.cafe-search {
+    background: #232323;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+.cafe-categories {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    overflow-x: hidden;
+}
+.cafe-cat {
+    background: #232323;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+.cafe-cat.active {
+    background: #cfa878;
+    color: #000;
+    font-weight: 600;
+}
+.cafe-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.cafe-item {
+    background: #1e1e1e;
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    gap: 15px;
+}
+.cafe-img {
+    width: 70px;
+    height: 70px;
+    background: #333;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+.cafe-img::after {
+    content: '☕';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.cafe-info { flex: 1; }
+.cafe-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
+.cafe-desc { font-size: 0.7rem; color: #888; margin-bottom: 8px; }
+.cafe-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cafe-price { font-weight: 700; color: #cfa878; }
+.cafe-add {
+    width: 24px;
+    height: 24px;
+    background: #cfa878;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: 700;
+}
+
+/* FitBody Mockup */
+.fit-app {
+    padding: 30px 20px 20px;
+    height: 100%;
+    background: #09090b;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.fit-app::-webkit-scrollbar { display: none; }
+
+.fit-header { margin-bottom: 25px; }
+.fit-greeting { font-size: 0.8rem; color: #a1a1aa; }
+.fit-name { font-size: 1.3rem; font-weight: 700; color: #fff; }
+
+.fit-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.fit-stat-box {
+    flex: 1;
+    background: #18181b;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #27272a;
+}
+.fit-ring {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid #3f3f46;
+    border-top-color: #34d399;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+.fit-stat-label { font-size: 0.7rem; color: #a1a1aa; }
+
+.fit-section-title { font-size: 1rem; font-weight: 600; margin-bottom: 15px; }
+.fit-workout {
+    background: linear-gradient(135deg, #18181b, #27272a);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+.fit-workout::before {
+    content: '🏃';
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    font-size: 5rem;
+    opacity: 0.1;
+}
+.fit-w-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
+.fit-w-desc { font-size: 0.75rem; color: #a1a1aa; margin-bottom: 15px; }
+.fit-w-btn {
+    background: #34d399;
+    color: #000;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
+/* Simulated cursor for demo */
+.demo-cursor {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid white;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 100;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+}
+.demo-cursor.click {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(0.8);
 }

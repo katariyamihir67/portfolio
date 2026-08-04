@@ -1,49 +1,71 @@
 /* ============================================
    PORTFOLIO — script.js
    Mihir Katariya — Flutter Developer
+   Highly Animated Version (GSAP + Lenis)
    ============================================ */
 
 (function () {
     'use strict';
 
     // ——————————————————————————————————————————
-    // 1. CURSOR GLOW (Smooth Premium)
+    // 0. INITIAL SETUP & LENIS (SMOOTH SCROLL)
     // ——————————————————————————————————————————
-    const cursorGlow = document.getElementById('cursorGlow');
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let cursorX = mouseX;
-    let cursorY = mouseY;
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+    // Initialize Lenis
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
     });
 
-    function updateCursor() {
-        if (cursorGlow) {
-            cursorX += (mouseX - cursorX) * 0.15; // Smooth trailing effect
-            cursorY += (mouseY - cursorY) * 0.15;
-            cursorGlow.style.left = cursorX + 'px';
-            cursorGlow.style.top = cursorY + 'px';
-        }
-        requestAnimationFrame(updateCursor);
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
     }
-    requestAnimationFrame(updateCursor);
+    requestAnimationFrame(raf);
 
-    // Interactive cursor scaling
+    // Sync ScrollTrigger with Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // ——————————————————————————————————————————
+    // 1. MAGNETIC CURSOR GLOW (GSAP Powered)
+    // ——————————————————————————————————————————
+    const cursorGlow = document.getElementById('cursorGlow');
+    
+    // Set initial GSAP state
+    gsap.set(cursorGlow, { xPercent: -50, yPercent: -50 });
+
+    let xTo = gsap.quickTo(cursorGlow, "x", {duration: 0.4, ease: "power3"}, {initial: true});
+    let yTo = gsap.quickTo(cursorGlow, "y", {duration: 0.4, ease: "power3"}, {initial: true});
+
+    document.addEventListener('mousemove', (e) => {
+        xTo(e.clientX);
+        yTo(e.clientY);
+    });
+
     const interactives = document.querySelectorAll('a, button, .skill-card, .project-card, .education-card, .timeline-content, .contact-item');
     interactives.forEach(el => {
         el.addEventListener('mouseenter', () => {
-            if (cursorGlow) cursorGlow.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            gsap.to(cursorGlow, { scale: 1.8, duration: 0.3, ease: "power2.out", opacity: 0.8 });
         });
         el.addEventListener('mouseleave', () => {
-            if (cursorGlow) cursorGlow.style.transform = 'translate(-50%, -50%) scale(1)';
+            gsap.to(cursorGlow, { scale: 1, duration: 0.3, ease: "power2.out", opacity: 0.5 });
         });
     });
 
     // ——————————————————————————————————————————
-    // 2. HERO PARTICLE CANVAS
+    // 2. HERO PARTICLE CANVAS (Kept intact, it's good)
     // ——————————————————————————————————————————
     const canvas = document.getElementById('heroParticles');
     if (canvas) {
@@ -69,7 +91,6 @@
                 this.speedX = (Math.random() - 0.5) * 0.4;
                 this.speedY = (Math.random() - 0.5) * 0.4;
                 this.opacity = Math.random() * 0.5 + 0.1;
-                // Cyan or purple hue
                 this.hue = Math.random() > 0.5 ? 190 : 270;
             }
             update() {
@@ -121,7 +142,259 @@
     }
 
     // ——————————————————————————————————————————
-    // 3. TYPEWRITER EFFECT
+    // 3. PRELOADER & GSAP HERO ENTRANCE ANIMATION
+    // ——————————————————————————————————————————
+    // Wait for DOM
+    window.addEventListener("load", () => {
+        // Initial setup for reveal text
+        gsap.set(".reveal-text", { y: 50, opacity: 0 });
+        gsap.set(".hero-flutter-logo", { scale: 0.5, opacity: 0, rotation: -20 });
+        gsap.set(".hero-badges .hero-badge", { scale: 0, opacity: 0 });
+        gsap.set(".hero-code-block", { x: -50, opacity: 0 });
+
+        const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        // Preloader Animation
+        const preloader = document.getElementById("preloader");
+        const preText = document.getElementById("preloaderText");
+        
+        let loaderObj = { value: 0 };
+        const preloaderTl = gsap.timeline({
+            onComplete: () => {
+                lenis.start(); // Ensure scrolling is re-enabled if stopped
+            }
+        });
+
+        // Stop scrolling while loading
+        lenis.stop();
+
+        preloaderTl
+        .to(loaderObj, {
+            value: 100,
+            duration: 2,
+            ease: "power2.inOut",
+            onUpdate: function() {
+                if (preText) preText.innerText = Math.floor(loaderObj.value) + "%";
+            }
+        })
+        .to(".preloader-logo", {
+            strokeDashoffset: 0,
+            duration: 1.5,
+            ease: "power2.inOut"
+        }, "-=2")
+        .to(".preloader-content", { opacity: 0, duration: 0.5, y: -20 }, "+=0.2")
+        .to(preloader, {
+            yPercent: -100,
+            duration: 0.8,
+            ease: "power3.inOut"
+        })
+        .set(preloader, { display: "none" });
+
+        // Hero Animation Sequence (starts right as preloader slides up)
+        heroTl
+        .to(".reveal-text", {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.15
+        }, 0) // Align to start of heroTl
+        // Pop in flutter logo
+        .to(".hero-flutter-logo", {
+            scale: 1,
+            opacity: 0.5,
+            rotation: 0,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.5)"
+        }, "-=1")
+        // Slide in code block
+        .to(".hero-code-block", {
+            x: 0,
+            opacity: 1,
+            duration: 1,
+        }, "-=1.2")
+        // Pop in badges
+        .to(".hero-badges .hero-badge", {
+            scale: 1,
+            opacity: 0.5,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)"
+        }, "-=0.8");
+
+        // Chain timelines
+        preloaderTl.add(heroTl, "-=0.4");
+    });
+
+    // ——————————————————————————————————————————
+    // 4. GSAP SCROLLTRIGGER ANIMATIONS
+    // ——————————————————————————————————————————
+
+    // Global: Parallax Background elements
+    gsap.to("body::before", {
+        y: "20%",
+        ease: "none",
+        scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: true }
+    });
+
+    // About Section
+    const aboutTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#about",
+            start: "top 75%",
+            end: "bottom 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    aboutTl.fromTo(".about-image-wrapper", 
+        { opacity: 0, x: -50, rotation: -5 },
+        { opacity: 1, x: 0, rotation: 0, duration: 1.2, ease: "power3.out" }
+    )
+    .fromTo(".about-text p", 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" },
+        "-=0.8"
+    )
+    .fromTo(".stat-item", 
+        { opacity: 0, scale: 0.8, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)" },
+        "-=0.4"
+    );
+
+    // Number counting animation via GSAP for stats
+    document.querySelectorAll('.stat-number').forEach(stat => {
+        ScrollTrigger.create({
+            trigger: stat,
+            start: "top 85%",
+            once: true,
+            onEnter: () => {
+                let target = parseInt(stat.dataset.count);
+                gsap.fromTo(stat, 
+                    { innerText: 0 }, 
+                    { innerText: target, duration: 2, ease: "power2.out", snap: { innerText: 1 }, 
+                      onUpdate: function() { stat.innerText = Math.floor(this.targets()[0].innerText); }
+                    }
+                );
+            }
+        });
+    });
+
+    // Skills Section (Staggered 3D Flip)
+    gsap.fromTo(".skill-card",
+        { opacity: 0, y: 60, rotationX: -15, transformPerspective: 1000 },
+        { 
+            opacity: 1, y: 0, rotationX: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: "#skills",
+                start: "top 75%",
+            }
+        }
+    );
+
+    // Animate skill bars
+    document.querySelectorAll('.skill-fill').forEach(bar => {
+        ScrollTrigger.create({
+            trigger: bar,
+            start: "top 85%",
+            onEnter: () => {
+                gsap.to(bar, { width: bar.dataset.level + "%", duration: 1.5, ease: "power3.out" });
+            }
+        });
+    });
+
+    // Projects Section
+    gsap.fromTo(".project-card",
+        { opacity: 0, y: 80, scale: 0.95 },
+        { 
+            opacity: 1, y: 0, scale: 1,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: "#projects",
+                start: "top 75%",
+            }
+        }
+    );
+
+    // Education Section
+    gsap.fromTo(".education-card",
+        { opacity: 0, x: -30 },
+        { 
+            opacity: 1, x: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#education",
+                start: "top 75%",
+            }
+        }
+    );
+
+    // Experience Timeline Section
+    gsap.fromTo(".timeline-item",
+        { opacity: 0, x: 40 },
+        { 
+            opacity: 1, x: 0,
+            duration: 0.8,
+            stagger: 0.3,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: "#experience",
+                start: "top 75%",
+            }
+        }
+    );
+
+    // Timeline line draw effect
+    gsap.fromTo(".timeline::before", 
+        { height: "0%" },
+        { 
+            height: "100%", 
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".timeline",
+                start: "top 60%",
+                end: "bottom 60%",
+                scrub: true
+            }
+        }
+    );
+
+    // Contact Section
+    gsap.fromTo(".contact-text > *",
+        { opacity: 0, y: 30 },
+        { 
+            opacity: 1, y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 75%",
+            }
+        }
+    );
+
+    gsap.fromTo(".contact-form",
+        { opacity: 0, x: 50 },
+        { 
+            opacity: 1, x: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 75%",
+            }
+        }
+    );
+
+    // ——————————————————————————————————————————
+    // 5. TYPEWRITER EFFECT
     // ——————————————————————————————————————————
     const typewriterEl = document.getElementById('typewriter');
     if (typewriterEl) {
@@ -163,7 +436,7 @@
     }
 
     // ——————————————————————————————————————————
-    // 4. NAVBAR — scroll state & active link
+    // 6. NAVBAR — SCROLL STATE
     // ——————————————————————————————————————————
     const navbar = document.getElementById('navbar');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -196,9 +469,7 @@
     window.addEventListener('scroll', updateNavbar);
     updateNavbar();
 
-    // ——————————————————————————————————————————
-    // 5. MOBILE NAV TOGGLE
-    // ——————————————————————————————————————————
+    // Mobile Nav Toggle
     const navToggle = document.getElementById('navToggle');
     const navLinksContainer = document.getElementById('navLinks');
 
@@ -208,7 +479,6 @@
             navLinksContainer.classList.toggle('active');
         });
 
-        // Close menu on link click
         navLinksContainer.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navToggle.classList.remove('active');
@@ -217,78 +487,19 @@
         });
     }
 
-    // ——————————————————————————————————————————
-    // 6. SCROLL-TRIGGERED ANIMATIONS
-    // ——————————————————————————————————————————
-    const animElements = document.querySelectorAll('.animate-on-scroll');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const delay = entry.target.dataset.delay || 0;
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, parseInt(delay));
-                observer.unobserve(entry.target);
+    // Smooth Anchor Scroll with Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                lenis.scrollTo(target, { offset: -80 });
             }
         });
-    }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
     });
 
-    animElements.forEach(el => observer.observe(el));
-
     // ——————————————————————————————————————————
-    // 7. SKILL BAR FILL ANIMATION
-    // ——————————————————————————————————————————
-    const skillFills = document.querySelectorAll('.skill-fill');
-
-    const skillObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const level = entry.target.dataset.level || 50;
-                entry.target.style.width = level + '%';
-                skillObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    skillFills.forEach(bar => skillObserver.observe(bar));
-
-    // ——————————————————————————————————————————
-    // 8. STAT COUNTER ANIMATION
-    // ——————————————————————————————————————————
-    const statNumbers = document.querySelectorAll('.stat-number');
-
-    const statObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.dataset.count);
-                animateCount(entry.target, 0, target, 1500);
-                statObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(num => statObserver.observe(num));
-
-    function animateCount(el, start, end, duration) {
-        let startTime = null;
-        function step(timestamp) {
-            if (!startTime) startTime = timestamp;
-            const progress = Math.min((timestamp - startTime) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-            el.textContent = Math.floor(eased * (end - start) + start);
-            if (progress < 1) {
-                requestAnimationFrame(step);
-            }
-        }
-        requestAnimationFrame(step);
-    }
-
-    // ——————————————————————————————————————————
-    // 9. CONTACT FORM (client-side only)
+    // 7. CONTACT FORM (client-side only)
     // ——————————————————————————————————————————
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
@@ -328,41 +539,181 @@
         }, 3500);
     }
 
-    // ——————————————————————————————————————————
-    // 10. SMOOTH ANCHOR SCROLL (fallback)
-    // ——————————————————————————————————————————
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-
-})();
-
-
     // ==========================================
-    // 5. PROJECT DEMO MODAL
+    // 8. PROJECT DEMO MODAL (WITH SIMULATED APP DEMOS)
     // ==========================================
     const modal = document.getElementById("projectModal");
     const modalCloseBtn = document.getElementById("modalClose");
     const modalTitle = document.getElementById("modalTitle");
+    const mobileFrame = document.querySelector(".mobile-frame");
+
+    let demoTimeline = null;
+
+    const mockups = {
+        "Urban Cafe": `
+            <div class="mockup-container">
+                <div class="demo-cursor" id="demoCursor"></div>
+                <div class="cafe-app" id="appScroll">
+                    <div class="cafe-header">
+                        <div class="cafe-title">Urban Cafe</div>
+                        <div>☕</div>
+                    </div>
+                    <div class="cafe-search">Search coffee...</div>
+                    <div class="cafe-categories">
+                        <div class="cafe-cat active">All</div>
+                        <div class="cafe-cat">Espresso</div>
+                        <div class="cafe-cat">Latte</div>
+                        <div class="cafe-cat">Mocha</div>
+                    </div>
+                    <div class="cafe-items">
+                        <div class="cafe-item" id="cafeItem1">
+                            <div class="cafe-img"></div>
+                            <div class="cafe-info">
+                                <div class="cafe-name">Cappuccino</div>
+                                <div class="cafe-desc">With oat milk</div>
+                                <div class="cafe-price-row">
+                                    <span class="cafe-price">$4.50</span>
+                                    <div class="cafe-add" id="addBtn">+</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cafe-item">
+                            <div class="cafe-img"></div>
+                            <div class="cafe-info">
+                                <div class="cafe-name">Vanilla Latte</div>
+                                <div class="cafe-desc">Extra shot</div>
+                                <div class="cafe-price-row">
+                                    <span class="cafe-price">$5.00</span>
+                                    <div class="cafe-add">+</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cafe-item">
+                            <div class="cafe-img"></div>
+                            <div class="cafe-info">
+                                <div class="cafe-name">Flat White</div>
+                                <div class="cafe-desc">Whole milk</div>
+                                <div class="cafe-price-row">
+                                    <span class="cafe-price">$4.00</span>
+                                    <div class="cafe-add">+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+        "FitBody App": `
+            <div class="mockup-container">
+                <div class="demo-cursor" id="demoCursor"></div>
+                <div class="fit-app" id="appScroll">
+                    <div class="fit-header">
+                        <div class="fit-greeting">Good Morning,</div>
+                        <div class="fit-name">Mihir!</div>
+                    </div>
+                    <div class="fit-stats">
+                        <div class="fit-stat-box">
+                            <div class="fit-ring">75%</div>
+                            <div class="fit-stat-label">Activity</div>
+                        </div>
+                        <div class="fit-stat-box">
+                            <div class="fit-ring" style="border-top-color: #f43f5e">8h</div>
+                            <div class="fit-stat-label">Sleep</div>
+                        </div>
+                    </div>
+                    <div class="fit-section-title">Today's Workouts</div>
+                    <div class="fit-workout" id="workout1">
+                        <div class="fit-w-title">Full Body HIIT</div>
+                        <div class="fit-w-desc">45 min • Advanced</div>
+                        <div class="fit-w-btn" id="startBtn">Start</div>
+                    </div>
+                    <div class="fit-workout">
+                        <div class="fit-w-title">Core Crusher</div>
+                        <div class="fit-w-desc">20 min • Beginner</div>
+                        <div class="fit-w-btn">Start</div>
+                    </div>
+                </div>
+            </div>
+        `
+    };
 
     window.openModal = function(projectName) {
-        if(modal && modalTitle) {
+        if(modal && modalTitle && mobileFrame) {
             modalTitle.textContent = projectName;
+            
+            // Inject Mockup or Placeholder
+            if (mockups[projectName]) {
+                mobileFrame.innerHTML = mockups[projectName];
+                runDemoAnimation(projectName);
+            } else {
+                mobileFrame.innerHTML = `<div class="video-placeholder">App Demo for ${projectName}</div>`;
+            }
+
             modal.classList.add("active");
-            document.body.style.overflow = "hidden"; // Prevent scrolling
+            lenis.stop(); // Stop smooth scrolling
         }
     };
+
+    function runDemoAnimation(projectName) {
+        if (demoTimeline) demoTimeline.kill(); // Kill any existing timeline
+        
+        const cursor = document.getElementById("demoCursor");
+        const appScroll = document.getElementById("appScroll");
+        
+        demoTimeline = gsap.timeline({ delay: 1, repeat: -1, repeatDelay: 2 });
+
+        if (projectName === "Urban Cafe") {
+            const item = document.getElementById("cafeItem1");
+            const btn = document.getElementById("addBtn");
+            
+            demoTimeline
+                // Move cursor to first item
+                .to(cursor, { opacity: 1, duration: 0.5 })
+                .to(cursor, { top: "40%", left: "50%", duration: 1, ease: "power2.inOut" })
+                // Scroll down
+                .to(appScroll, { scrollTo: 100, duration: 1.5, ease: "power2.inOut" })
+                // Move cursor to add button
+                .to(cursor, { top: "52%", left: "80%", duration: 1, ease: "power2.inOut" })
+                // Click
+                .to(cursor, { scale: 0.8, backgroundColor: "rgba(255,255,255,0.8)", duration: 0.1 })
+                .to(btn, { scale: 0.9, backgroundColor: "#fff", duration: 0.1 }, "<")
+                .to(cursor, { scale: 1, backgroundColor: "rgba(255,255,255,0.4)", duration: 0.1 })
+                .to(btn, { scale: 1, backgroundColor: "#cfa878", duration: 0.1 }, "<")
+                // Success pop (change button text temporarily)
+                .set(btn, { innerText: "✓", backgroundColor: "#34d399" })
+                .to(cursor, { opacity: 0, duration: 0.5, delay: 0.5 })
+                // Reset
+                .set(btn, { innerText: "+", backgroundColor: "#cfa878" })
+                .to(appScroll, { scrollTo: 0, duration: 0 });
+
+        } else if (projectName === "FitBody App") {
+            const startBtn = document.getElementById("startBtn");
+
+            demoTimeline
+                .to(cursor, { opacity: 1, duration: 0.5 })
+                // Scroll down
+                .to(appScroll, { scrollTo: 120, duration: 1.5, ease: "power2.inOut" })
+                // Move cursor to start button
+                .to(cursor, { top: "60%", left: "25%", duration: 1, ease: "power2.inOut" })
+                // Click
+                .to(cursor, { scale: 0.8, backgroundColor: "rgba(255,255,255,0.8)", duration: 0.1 })
+                .to(startBtn, { scale: 0.9, duration: 0.1 }, "<")
+                .to(cursor, { scale: 1, backgroundColor: "rgba(255,255,255,0.4)", duration: 0.1 })
+                .to(startBtn, { scale: 1, duration: 0.1 }, "<")
+                .set(startBtn, { innerText: "Started!", backgroundColor: "#f43f5e", color: "#fff" })
+                .to(cursor, { opacity: 0, duration: 0.5, delay: 0.5 })
+                // Reset
+                .set(startBtn, { innerText: "Start", backgroundColor: "#34d399", color: "#000" })
+                .to(appScroll, { scrollTo: 0, duration: 0 });
+        }
+    }
 
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener("click", () => {
             modal.classList.remove("active");
-            document.body.style.overflow = "auto";
+            if (demoTimeline) demoTimeline.kill();
+            mobileFrame.innerHTML = ""; // Clear content
+            lenis.start(); // Resume scrolling
         });
     }
 
@@ -370,7 +721,11 @@
         modal.addEventListener("click", (e) => {
             if (e.target === modal) {
                 modal.classList.remove("active");
-                document.body.style.overflow = "auto";
+                if (demoTimeline) demoTimeline.kill();
+                mobileFrame.innerHTML = "";
+                lenis.start();
             }
         });
     }
+
+})();

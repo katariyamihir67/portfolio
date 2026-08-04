@@ -7,12 +7,24 @@
     <meta name="keywords" content="MIHIR KATARIYA, Flutter Developer, Dart, Mobile App Developer, Portfolio">
     <meta name="author" content="MIHIR KATARIYA">
     <title>MIHIR KATARIYA | Flutter Developer</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- ===================== PRELOADER ===================== -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <svg class="preloader-logo" viewBox="0 0 64 64" width="60" height="60">
+                <rect width="64" height="64" rx="16" fill="transparent" stroke="#00e5ff" stroke-width="2"/>
+                <text x="50%" y="50%" font-family="monospace" font-size="28" font-weight="bold" fill="#00e5ff" text-anchor="middle" dominant-baseline="central">MK</text>
+            </svg>
+            <div class="preloader-text" id="preloaderText">0%</div>
+        </div>
+    </div>
+
     <!-- ===================== CURSOR GLOW ===================== -->
     <div class="cursor-glow" id="cursorGlow"></div>
 
@@ -73,6 +85,10 @@
                     <span>View My Work</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
                 </a>
+                <a href="Mihir_Katariya_Resume.pdf" target="_blank" class="btn btn-outline" download>
+                    <span>Download CV</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </a>
                 <a href="#contact" class="btn btn-outline">
                     <span>Get In Touch</span>
                 </a>
@@ -106,7 +122,7 @@
                 </div>
                 <div class="about-text animate-on-scroll">
                     <p>
-                        I'm <strong>MIHIR KATARIYA</strong>, a passionate Flutter developer based in Surat, India. I specialize in building 
+                        I'm <strong>MIHIR KATARIYA</strong>, a passionate Flutter developer based in Ahmedabad, India. I specialize in building 
                         beautiful, high-performance mobile applications using Flutter and Dart.
                     </p>
                     <p>
@@ -276,11 +292,11 @@
                         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                     </div>
                     <div class="edu-content">
-                        <span class="edu-year">2023 - 2026</span>
+                        <span class="edu-year">2022 - 2026</span>
                         <h3 class="edu-title">B.E. Computer Engineering</h3>
                         <h4 class="edu-institute">Government Engineering College, Modasa</h4>
                         <p class="edu-desc">Pursuing Bachelor of Engineering, focusing on software development and core computer science concepts.</p>
-                        <div class="edu-grade">CGPA: 7.3</div>
+                        <div class="edu-grade">CGPA: 7.0</div>
                     </div>
                 </div>
             </div>
@@ -298,13 +314,13 @@
                 <div class="timeline-item animate-on-scroll">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <span class="timeline-date">2025 — Present</span>
-                        <h3 class="timeline-role">Flutter Developer</h3>
+                        <span class="timeline-date">6 Months</span>
+                        <h3 class="timeline-role">Flutter Developer Intern</h3>
                         <h4 class="timeline-company">SHV Infotech, Surat</h4>
                         <p class="timeline-desc">
-                            Building and maintaining Flutter mobile applications. Collaborating with UI/UX designers 
-                            to translate designs into pixel-perfect, responsive interfaces. Working with REST APIs 
-                            and implementing efficient state management solutions.
+                            Successfully completed a 6-month internship building and maintaining Flutter mobile applications. Collaborated with UI/UX designers 
+                            to translate designs into pixel-perfect, responsive interfaces. Worked with REST APIs 
+                            and implemented efficient state management solutions.
                         </p>
                         <div class="timeline-tags">
                             <span class="tag">Flutter</span>
@@ -373,7 +389,7 @@
                             </div>
                             <div>
                                 <span class="contact-label">Location</span>
-                                <span class="contact-value">Surat, Gujarat, India</span>
+                                <span class="contact-value">Ahmedabad, Gujarat, India</span>
                             </div>
                         </div>
                     </div>
@@ -428,6 +444,12 @@
             <p class="footer-copyright">&copy; 2025 All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- ===================== ANIMATION LIBRARIES ===================== -->
+    <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 
     <script src="script.js"></script>
 </body>
