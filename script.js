@@ -634,6 +634,50 @@
                     </div>
                 </div>
             </div>
+        `,
+        "Hair Saloon": `
+            <div class="mockup-container">
+                <div class="demo-cursor" id="demoCursor"></div>
+                <div class="saloon-app" id="appScroll" style="background:#111; color:#fff; width:100%; height:100%; padding:20px; box-sizing:border-box; font-family:sans-serif; overflow-y:auto; position:relative;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <div style="font-size:1.2rem; font-weight:bold; color:#d4af37;">Gloss & Co.</div>
+                        <div style="width:35px; height:35px; background:#333; border-radius:50%;"></div>
+                    </div>
+                    <div style="font-size:1.5rem; font-weight:bold; margin-bottom:20px;">Welcome, Elena!</div>
+                    
+                    <div style="font-size:0.8rem; color:#888; margin-bottom:10px; letter-spacing:1px;">FEATURED STYLISTS</div>
+                    <div style="display:flex; gap:10px; margin-bottom:30px;">
+                        <div style="flex:1; background:#222; border-radius:12px; padding:12px; text-align:center; border:1px solid #d4af37;">
+                            <div style="width:50px; height:50px; border-radius:50%; background:#444; margin:0 auto 10px;"></div>
+                            <div style="font-size:0.9rem; font-weight:bold;">Chloe</div>
+                            <div style="color:#d4af37; font-size:0.8rem; margin-top:4px;">★ 5.0</div>
+                        </div>
+                        <div style="flex:1; background:#222; border-radius:12px; padding:12px; text-align:center;">
+                            <div style="width:50px; height:50px; border-radius:50%; background:#444; margin:0 auto 10px;"></div>
+                            <div style="font-size:0.9rem; font-weight:bold;">Julian</div>
+                            <div style="color:#888; font-size:0.8rem; margin-top:4px;">★ 4.9</div>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size:0.8rem; color:#888; margin-bottom:10px; letter-spacing:1px;">OUR SERVICES</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:30px;">
+                        <div style="width:calc(50% - 5px); background:#222; padding:15px; border-radius:12px; box-sizing:border-box;">
+                            <div style="font-size:1.2rem; margin-bottom:8px;">✂️</div>
+                            <div style="font-size:0.9rem; font-weight:bold;">Haircuts</div>
+                            <div style="color:#d4af37; font-size:0.85rem; margin-top:8px;">$150+</div>
+                        </div>
+                        <div style="width:calc(50% - 5px); background:#222; padding:15px; border-radius:12px; box-sizing:border-box;">
+                            <div style="font-size:1.2rem; margin-bottom:8px;">🎨</div>
+                            <div style="font-size:0.9rem; font-weight:bold;">Color Bar</div>
+                            <div style="color:#d4af37; font-size:0.85rem; margin-top:8px;">$280+</div>
+                        </div>
+                    </div>
+
+                    <div id="bookBtn" style="background:linear-gradient(90deg, #d4af37, #f9e596); color:#000; padding:15px; text-align:center; border-radius:12px; font-weight:bold; font-size:0.9rem;">
+                        Find Your Perfect Stylist
+                    </div>
+                </div>
+            </div>
         `
     };
 
@@ -704,6 +748,26 @@
                 .to(cursor, { opacity: 0, duration: 0.5, delay: 0.5 })
                 // Reset
                 .set(startBtn, { innerText: "Start", backgroundColor: "#34d399", color: "#000" })
+                .to(appScroll, { scrollTo: 0, duration: 0 });
+        } else if (projectName === "Hair Saloon") {
+            const bookBtn = document.getElementById("bookBtn");
+
+            demoTimeline
+                .to(cursor, { opacity: 1, duration: 0.5 })
+                // Scroll down
+                .to(appScroll, { scrollTo: 150, duration: 1.5, ease: "power2.inOut" })
+                // Move cursor to book button
+                .to(cursor, { top: "78%", left: "50%", duration: 1, ease: "power2.inOut" })
+                // Click
+                .to(cursor, { scale: 0.8, backgroundColor: "rgba(255,255,255,0.8)", duration: 0.1 })
+                .to(bookBtn, { scale: 0.95, duration: 0.1 }, "<")
+                .to(cursor, { scale: 1, backgroundColor: "rgba(255,255,255,0.4)", duration: 0.1 })
+                .to(bookBtn, { scale: 1, duration: 0.1 }, "<")
+                // Success state
+                .set(bookBtn, { innerText: "Searching...", background: "#444", color: "#fff" })
+                .to(cursor, { opacity: 0, duration: 0.5, delay: 0.5 })
+                // Reset
+                .set(bookBtn, { innerText: "Find Your Perfect Stylist", background: "linear-gradient(90deg, #d4af37, #f9e596)", color: "#000" })
                 .to(appScroll, { scrollTo: 0, duration: 0 });
         }
     }
